@@ -1,5 +1,5 @@
 from websocket_server import WebsocketServer
-
+from lib.message import MessageDecoder
 # Called for every client connecting (after handshake)
 def new_client(client, server):
 	print("New client connected and was given id %d" % client['id'])
@@ -13,9 +13,9 @@ def client_left(client, server):
 
 # Called when a client sends a message
 def message_received(client, server, message):
-	if len(message) > 200:
-		message = message[:200]+'..'
-	print("Client(%d) said: %s" % (client['id'], message))
+    msg = MessageDecoder(message).to_hash()
+    msg['data'].update(client)
+    server.em.trigger(msg['event'], msg['data'])
 
 
 PORT=9001
