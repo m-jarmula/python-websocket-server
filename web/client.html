@@ -1,0 +1,17 @@
+<html>
+<head>
+  <title>Simple client</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="rpi_ws.js"></script>
+</head>
+<body>
+  <div id="rpi-data"></div>
+  <script>
+    $(document).ready(function(){
+      $(document).on('rpi:message',function(event, data){
+        $('#rpi-data').text(JSON.stringify(data))
+      });
+    });
+  </script>
+</body>
+</html>
