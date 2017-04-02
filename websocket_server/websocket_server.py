@@ -7,6 +7,8 @@ import struct
 from base64 import b64encode
 from hashlib import sha1
 import logging
+from lib.event_manager import EventManager
+from lib.observer_manager import ObserverManager
 
 if sys.version_info[0] < 3:
     from SocketServer import ThreadingMixIn, TCPServer, StreamRequestHandler
@@ -120,6 +122,9 @@ class WebsocketServer(ThreadingMixIn, TCPServer, API):
     def __init__(self, port, host='127.0.0.1', loglevel=logging.WARNING):
         logger.setLevel(loglevel)
         self.port = port
+        self.channels = {}
+        self.em = EventManager()
+        observers = ObserverManager(self)
         TCPServer.__init__(self, (host, port), WebSocketHandler)
 
     def _message_received_(self, handler, msg):
