@@ -14,5 +14,5 @@ class ObserverManager:
     def on_report(self, msg):
         for user_id, user in self.server.channels[msg['client']['client_id']].items():
             # don't send message to yourself
-            if(user_id != data['id']):
+            if(user_id != msg['client']['id']):
                 user['handler'].send_message(Message('report',msg['data']).to_json())
