@@ -14,8 +14,8 @@ def client_left(client, server):
 # Called when a client sends a message
 def message_received(client, server, message):
     msg = MessageDecoder(message).to_hash()
-    msg['data'].update(client)
-    server.em.trigger(msg['event'], msg['data'])
+    msg['client'] = client
+    server.em.trigger(msg['event'], msg)
 
 
 PORT=9001
