@@ -2,14 +2,44 @@
 <head>
   <title>Simple client</title>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="jquery.canvasjs.min.js"></script>
   <script type="text/javascript" src="rpi_ws.js"></script>
+  <script type="text/javascript" src="rpi_chart.js"></script>
+  <script type="text/javascript">
+  window.onload = function(){
+    temperature_chart = new RpiChart({
+      type: 'Temperature',
+      color: '#026794'
+    });
+    pressure_chart = new RpiChart({
+      type: 'Pressure',
+      color: '#ca9700'
+    });
+  }
+  </script>
+
+
 </head>
 <body>
-  <div id="rpi-data"></div>
+  <div id="rpi-data">
+    <table>
+      <tr>
+        <th>Temperature</th>
+        <td id="rpi-temperature"></tf>
+      </tr>
+      <tr>
+        <th>Pressure</th>
+        <td id="rpi-pressure"></td>
+      </tr>
+    </table>
+  </div>
+  <div id="temperature-chart" style="width: 45%; height: 300px;display: inline-block;"></div>
+  <div id="pressure-chart" style="width: 45%; height: 300px;display: inline-block;"></div>
   <script>
     $(document).ready(function(){
       $(document).on('rpi:message',function(event, data){
-        $('#rpi-data').text(JSON.stringify(data))
+        $('#rpi-'+data.type).text(JSON.stringify(data.value))
+        window[data.type+"_chart"].addPoint(data.value).render()
       });
     });
   </script>
