@@ -1,8 +1,4 @@
 function RpiChart(opts){
-  // type, dataPoints, color
-  /* point example:
-    { x: new Date(2010, 0, 3), y: 650 },
-  */
   var selector = opts.type + "-chart"
   var options = {
     type: "line",
@@ -43,7 +39,6 @@ function RpiChart(opts){
   }
   this.addPoint = function(value){
     options.dataPoints.push({x: new Date(), y: value });
-    // $("#"+selector).CanvasJSChart(options);
     return this;
   }
 }
