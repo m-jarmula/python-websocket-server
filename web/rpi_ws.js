@@ -1,6 +1,6 @@
 (function($){
   var client_id ='xcfyt56fd';
-  var ws = new  WebSocket('ws://localhost:9001');
+  var ws = new  WebSocket('ws://149.202.59.217:9001');
   this.send = function (message, callback) {
       this.waitForConnection(function () {
           ws.send(JSON.stringify(message));
